@@ -30,7 +30,7 @@
 							</div>
 							<p>
 								<label for="post-image">Alternate Image</label>
-								<input type="file" name="post-image" />
+								<input type="file" name="post-image" onchange="readURL(this)" />
 							</p>
 						</div>
 						<div class="fi-form-left">
@@ -59,9 +59,13 @@
 				</form>
 
 				<script>
+					var shutter 	 = new Audio();
+					shutter.autoplay = false;
+					shutter.src 	 = navigator.userAgent.match(/Firefox/) ? '<?php echo esc_url( WPCAM_URL ) ?>/assets/webcamjs/shutter.ogg' : '<?php echo esc_url( WPCAM_URL ) ?>/assets/webcamjs/shutter.mp3';
+
 					Webcam.set({
-						width: 320,
-						height: 240,
+						width: 640,
+						height: 480,
 						image_format: 'jpeg',
 						jpeg_quality: 100,
 						enable_flash: false,
@@ -71,10 +75,23 @@
 				
 					function take_snapshot() {
 						Webcam.snap( function(data_uri) {
+							try { shutter.currentTime = 0; } catch(e) {;} // fails in IE
+							shutter.play();
 							var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
 							jQuery(".image-tag").val(raw_image_data);
 							document.getElementById('fi-result').innerHTML = '<img src="'+data_uri+'"/>';
 						} );
+					}
+
+					function readURL(input) {
+						if (input.files && input.files[0]) {
+						    var reader = new FileReader();
+						    reader.onload = function(e) {
+						      	document.getElementById('fi-result').innerHTML = '<img src="'+e.target.result+'"/>';
+						    }
+						    reader.readAsDataURL(input.files[0]);
+						    jQuery(".image-tag").val('');
+					  	}
 					}
 				</script>
 			</div>

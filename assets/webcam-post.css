@@ -5,8 +5,9 @@
 .fi-content .btn:hover, .fi-content .btn:focus { text-decoration: none !important; }
 .fi-content .fi-title { font-size: 2em; margin: 0 0 2em 0; }
 .fi-content #fi-camera { margin-bottom: 20px; }
-.fi-content #fi-result { width: 320px; height: 240px; margin-bottom: 30px; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,.1); position: relative; }
+.fi-content #fi-result { width: 320px; height: 240px; margin-bottom: 30px; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,.1); position: relative; text-align: center; }
 .fi-content #fi-result span { font-size: .7em; text-transform: uppercase; letter-spacing: 1px; height: 20px; line-height: 20px; top: 50%; left: 50%; position: absolute; transform: translate(-50%, -50%); color: #ababab; }
+.fi-content #fi-result img { width: auto; height: 100%; margin: 0 auto; }
 .fi-content .fi-form-wrap::before,
 .fi-content .fi-form-wrap::after { content: ""; display: table; }
 .fi-content .fi-form-wrap::after { clear: both; }

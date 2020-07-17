@@ -97,7 +97,7 @@ if( !class_exists( 'WP_Webcam_Post' ) ) {
 		public function fi_webcam_scripts() {
 			if( is_page_template( 'webcam-access-page.php' ) ) {
 				wp_enqueue_style( 'webcam-css', WPCAM_URL . '/assets/webcam-post.css', array() );
-				wp_enqueue_script( 'webcam', 'https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js', array( 'jquery' ) );
+				wp_enqueue_script( 'webcam', WPCAM_URL . '/assets/webcamjs/webcam.min.js', array( 'jquery' ) );
 				wp_enqueue_media();
 			}
 			if( is_singular( 'webcam' ) ) {
