@@ -1,16 +1,22 @@
-.fi-content { max-width: 1000px; margin: 0 auto; padding: 40px 0 60px 0; text-align: left; }
+.fi-content { max-width: 1000px; margin: 0 auto; padding: 60px 30px; text-align: left; }
 .fi-content *:focus { outline: none; }
 .fi-content hr { margin: 2em 0; }
 .fi-content h2 { font-size: 24px; }
 .fi-content .btn:hover, .fi-content .btn:focus { text-decoration: none !important; }
-.fi-content .fi-title { font-size: 2em; margin: 0 0 2em 0; }
-.fi-content #fi-camera { margin-bottom: 20px; }
-.fi-content #fi-result { width: 320px; height: 240px; margin-bottom: 30px; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,.1); position: relative; text-align: center; }
+.fi-content .fi-title { font-size: 3em; margin: 0 0 1em 0; }
+.fi-content #video-webcam { margin-bottom: 30px; }
+.fi-content #fi-result { width: 320px; height: 240px; margin-bottom: 30px; position: relative; text-align: center; background: #fff; border: 1px solid #ddd; }
 .fi-content #fi-result span { font-size: .7em; text-transform: uppercase; letter-spacing: 1px; height: 20px; line-height: 20px; top: 50%; left: 50%; position: absolute; transform: translate(-50%, -50%); color: #ababab; }
-.fi-content #fi-result img { width: auto; height: 100%; margin: 0 auto; }
+.fi-content #fi-result img { width: auto; height: 100%; margin: 0 auto; padding: 10px; }
+.fi-content .fi-camera-wrap .btn { width: 100%; }
 .fi-content .fi-form-wrap::before,
 .fi-content .fi-form-wrap::after { content: ""; display: table; }
 .fi-content .fi-form-wrap::after { clear: both; }
 .fi-content .fi-form-left { float: left; width: calc(100% - 360px); }
 .fi-content .fi-form-right { float: right; width: 320px; }
 .fi-content .fi-image-data { background: #fff; text-align: left; }
+@media screen and (max-width: 860px) {
+	.fi-content .fi-form-left,
+	.fi-content .fi-form-right { float: none; width: 100%; }
+	.fi-content #fi-result { width: 100%; height: 460px; }
+}

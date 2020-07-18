@@ -25,7 +25,7 @@ if( !class_exists( 'WP_Webcam_Post' ) ) {
 		public static function init() {
 			$self = new self();
 			add_action( 'init', [ $self, 'fi_register_post_type' ] );
-			add_action( 'plugins_loaded', [ $self, 'fi_create_webcam_page' ] );
+			add_action( 'init', [ $self, 'fi_create_webcam_page' ] );
 			add_action( 'template_include', [ $self, 'fi_webcam_page_redirect' ] );
 			add_action( 'wp_enqueue_scripts', [ $self, 'fi_webcam_scripts' ] );
 			add_action( 'admin_post_nopriv_webcam_submit', [ $self, 'fi_webcam_post_image' ] );
@@ -97,7 +97,6 @@ if( !class_exists( 'WP_Webcam_Post' ) ) {
 		public function fi_webcam_scripts() {
 			if( is_page_template( 'webcam-access-page.php' ) ) {
 				wp_enqueue_style( 'webcam-css', WPCAM_URL . '/assets/webcam-post.css', array() );
-				wp_enqueue_script( 'webcam', WPCAM_URL . '/assets/webcamjs/webcam.min.js', array( 'jquery' ) );
 				wp_enqueue_media();
 			}
 			if( is_singular( 'webcam' ) ) {

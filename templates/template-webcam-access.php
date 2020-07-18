@@ -13,26 +13,26 @@
 				<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" enctype="multipart/form-data">
 					
 					<?php wp_nonce_field( 'webcam-nonce', 'webcam-nonce-field' ); ?>
-					<input type="hidden" name="post-image-raw" class="image-tag">
-					<input type="hidden" name="action" value="webcam_submit">
 
 					<div class="fi-camera-wrap">
-						<div id="fi-camera"></div>
-						<input type="button" class="btn" value="Take Snapshot" onClick="take_snapshot()">
+						<video autoplay="true" id="video-webcam"></video>
+						<input type="button" class="btn" value="Take Snapshot" onClick="takeSnapshot()">
 					</div>
 					
 					<hr>
 					
 					<div class="fi-form-wrap">
+
 						<div class="fi-form-right">
 							<div id="fi-result">
 								<span>Your Photo</span>
 							</div>
 							<p>
-								<label for="post-image">Alternate Image</label>
-								<input type="file" name="post-image" onchange="readURL(this)" />
+								<label><strong>Alternate Image</strong></label>
+								<input type="file" name="post-image" onchange="readURL(this)">
 							</p>
 						</div>
+
 						<div class="fi-form-left">
 							<p>
 								<input type="text" name="post-title" placeholder="Your Name">
@@ -49,37 +49,52 @@
 								?>
 							</p>
 						</div>
-					</div>
-					
-					<hr>
 
+					</div>
+					<hr>
 					<p>
+						<input type="hidden" name="post-image-raw" id="image-data">
+						<input type="hidden" name="action" value="webcam_submit">
 						<input type="submit" value="Submit" class="btn">
 					</p>
 				</form>
 
 				<script>
-					var shutter 	 = new Audio();
-					shutter.autoplay = false;
-					shutter.src 	 = navigator.userAgent.match(/Firefox/) ? '<?php echo esc_url( WPCAM_URL ) ?>/assets/webcamjs/shutter.ogg' : '<?php echo esc_url( WPCAM_URL ) ?>/assets/webcamjs/shutter.mp3';
+					var videoElement = document.querySelector( '#video-webcam' );
 
-					Webcam.set({
-						width: 320,
-						height: 240,
-						image_format: 'jpeg',
-						jpeg_quality: 90,
+					window.addEventListener( 'load', (event) => {
+						navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+						if( navigator.getUserMedia ) {
+							navigator.getUserMedia({ video: true }, handleVideo, handleError);
+						}
+						function handleVideo( stream ) {
+							videoElement.srcObject = stream;
+						}
+
+						function handleError(e) {
+							console.log( 'Error!' );
+						}
 					});
-				
-					Webcam.attach( '#fi-camera' );
-				
-					function take_snapshot() {
-						Webcam.snap( function(data_uri) {
-							try { shutter.currentTime = 0; } catch(e) {;} // fails in IE
-							shutter.play();
-							var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
-							jQuery(".image-tag").val(raw_image_data);
-							document.getElementById('fi-result').innerHTML = '<img src="'+data_uri+'"/>';
-						} );
+
+					function takeSnapshot() {
+					    var context;
+					    var width   = videoElement.offsetWidth, 
+					    	height  = videoElement.offsetHeight,
+					    	canvas  = document.createElement('canvas'),
+					    	context = canvas.getContext('2d'),
+					    	imgSrc  = '',
+					    	imgData = '';
+
+					    canvas.width  = width;
+					    canvas.height = height;
+
+					    context.drawImage(videoElement, 0, 0, width, height);
+
+					    imgSrc  = canvas.toDataURL('image/png');
+					    imgData = imgSrc.replace(/^data\:image\/\w+\;base64\,/, '');
+
+						document.getElementById('image-data').value = imgData;
+					    document.getElementById('fi-result').innerHTML = '<img src="'+imgSrc+'"/>';
 					}
 
 					function readURL(input) {
@@ -89,7 +104,7 @@
 						      	document.getElementById('fi-result').innerHTML = '<img src="'+e.target.result+'"/>';
 						    }
 						    reader.readAsDataURL(input.files[0]);
-						    jQuery(".image-tag").val('');
+						    document.getElementById('image-data').value = '';
 					  	}
 					}
 				</script>
