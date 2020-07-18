@@ -64,11 +64,10 @@
 					shutter.src 	 = navigator.userAgent.match(/Firefox/) ? '<?php echo esc_url( WPCAM_URL ) ?>/assets/webcamjs/shutter.ogg' : '<?php echo esc_url( WPCAM_URL ) ?>/assets/webcamjs/shutter.mp3';
 
 					Webcam.set({
-						width: 640,
-						height: 480,
+						width: 320,
+						height: 240,
 						image_format: 'jpeg',
-						jpeg_quality: 100,
-						enable_flash: false,
+						jpeg_quality: 90,
 					});
 				
 					Webcam.attach( '#fi-camera' );
